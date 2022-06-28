@@ -1,0 +1,5 @@
+
+.characterButton {
+  /* Why doesn't this work? (See line #104 in App.js for where this class is applied) */
+  border: 5px solid red;
+}
