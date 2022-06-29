@@ -1,4 +1,5 @@
 import AppBar from '@mui/material/AppBar';
+import React, {useState} from 'react';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -11,9 +12,23 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import './App.css';
-// import characters from './protagonists.json'
+import CharacterCard from './CharacterCard';
+import characters from './protagonists.json'
+
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/vnd.api+json");
+myHeaders.append("Authorization", "wTp5G2tv");
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+  
+ 
 
 function App() {
+  const [adoptData, setAdoptData] = useState([]);
   return (
     <div className="App">
       <CssBaseline />
@@ -25,18 +40,46 @@ function App() {
       >
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Characters Inc
+            Animals Inc
           </Typography>
           <Button 
             href="#" 
             variant="outlined" 
             sx={{ my: 1, mx: 1.5 }}
-            onClick={() => alert("Boop!")}
+            onClick={() => {
+            //   console.log("1 before fetch in App()", animalData, "---", Date.now());
+              
+          
+            //   fetch("https://zoo-animal-api.herokuapp.com/animals/rand/9", requestOptions)
+            //     .then(response => response.json())
+            //     .then(result => {
+            //       console.log("2 inside fetch", Date.now());
+            //       console.log("3 special animals", result, "---", Date.now())
+            //       setAnimalData(result)
+            //     })
+            //     .catch(error => console.log('error', error));
+            
+            //   console.log("4 after fetch", animalData, "---", Date.now());
+              
+            // 
+
+            fetch("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/", requestOptions)
+            .then(response => response.text())
+            .then(result => {
+            console.log(result)
+            setAdoptData(result)
+            })
+            .catch(error => console.log('error', error));
+              console.log('inside on click', adoptData)
+                }
+                }
           >
-            Button
+            { console.log('ouside on click', adoptData)}
+            New Animals
           </Button>
         </Toolbar>
       </AppBar>
+      
       <Container maxWidth="md" sx={{ my: 4}}>
         <Typography
           variant="h2"
@@ -44,7 +87,7 @@ function App() {
           color="text.primary"
           sx={{ py: 2}}
         >
-          Prevalent Protagonists
+          Random Animals
         </Typography>
         <Typography 
           variant="h5" 
@@ -52,7 +95,7 @@ function App() {
           color="text.secondary"
           sx={{ mx: 10 }}
         >
-          Hmm, seems like we're missing some of the other protagonists.
+          Check Out Some Cool Animals!!!
         </Typography>
       </Container>
       {/* End hero unit */}
@@ -62,53 +105,35 @@ function App() {
           justifyContent="center"
           alignItems="flex-start"
         >
-          <Grid
+          {
+            adoptData.map((animalDetails, index) =>
+            <Grid
             item
             xs={12}
             md={4}
+            key = {index}
           >
-            <Card>
-              <CardMedia
-                component="img"
-                height="350px"
-                image={"https://i.imgur.com/56chgMj.png"}
-              />
-              <CardHeader
-                title={"Miles Morales"}
-                titleTypographyProps={{ align: 'center' }}
-                sx={{ mt: 1 }}
-              />
-              <CardContent sx={{ pt: 0 }}>
-                <ul>
-                    <Typography component="li">
-                      Definitely Not Spiderman
-                    </Typography>
-                    <Typography component="li">
-                      "Lanky Puberty Boy" vibes
-                    </Typography>
-                    <Typography component="li">
-                      Can't do it on demand
-                    </Typography>
-                    <Typography component="li">
-                      Elite music taste
-                    </Typography>
-                </ul>
-              </CardContent>
-              <CardActions>
-                <Button 
-                  variant="contained"
-                  sx={{ px: 6, mx: 'auto' }}
-                  // I'm trying to use custom CSS defined in the file App.css,
-                  // but it isn't working. Why, and how can I fix it?
-                  className="characterButton"
-                >
-                  Vote
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
+            <CharacterCard
+            
+            name = {animalDetails.data.attribute.name}
+            
+            // heroImage = {animalDetails.image_link}
+            // sentence = {animalDetails.latin_name}
+            
+            // descriptionArray = {character.description}
+            >
+              
+            </CharacterCard>
+            { console.log('ouside on click bottom', adoptData)}
+            </Grid>
+            )
+          }
+
+    { console.log('ouside on click', adoptData)}
         </Grid>
+          
       </Container>
+      
     </div>
   );
 }
