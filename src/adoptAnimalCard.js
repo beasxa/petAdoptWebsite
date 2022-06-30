@@ -32,9 +32,10 @@ export default function MultiActionAreaCard(props) {
       </CardActionArea>
       <CardActions>
         {console.log("url", props.url)}
-        <Button size="large" color="primary" href={props.url}>
-          {props.name}'s Page
-        </Button>
+        {props.url ? 
+             <Button size="large" color="primary" href={props.url}>
+            {props.name}'s Page </Button>
+            : null } 
       </CardActions>
     </Card>
   );

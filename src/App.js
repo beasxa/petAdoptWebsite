@@ -26,12 +26,35 @@ var requestOptions = {
   redirect: 'follow'
 };
 
+// useEffect=(() => {
+//   fetch("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/", requestOptions)
+//     .then(response => response.json())
+//     .then(result => {
+//       console.log("note for print--------------", result)
+//       setAdoptData(result.data)
+//     })
+//     .catch(error => console.log('error', error))
+// }, []
+// )
+
 
 
 function App() {
   const [adoptData, setAdoptData] = useState([]);
+
+  useEffect(() => {
+    fetch("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        console.log("note for print--------------", result);
+        setAdoptData(result.data);
+      })
+      .catch(error => console.log('error', error));
+  }, []
+  )
+
   console.log('new line print', adoptData)
-  return (
+  return ( 
     <div className="App">
       <CssBaseline />
       <AppBar
@@ -48,17 +71,16 @@ function App() {
             href="#"
             variant="outlined"
             sx={{ my: 1, mx: 1.5 }}
-            onClick={() => {
-              fetch("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/", requestOptions)
-                .then(response => response.json())
-                .then(result => {
-                  console.log("note for print--------------", result)
-                  setAdoptData(result.data)
-                })
-                .catch(error => console.log('error', error));
-              console.log('inside on click infinite?', adoptData)
-            }
-            }
+            // useEffect={() => {
+            //   fetch("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/", requestOptions)
+            //     .then(response => response.json())
+            //     .then(result => {
+            //       console.log("note for print--------------", result)
+            //       setAdoptData(result.data)
+            //     })
+            //     .catch(error => console.log('error', error))
+            // }
+            // }
           >
             {console.log('ouside on click', adoptData)}
             New Animals
