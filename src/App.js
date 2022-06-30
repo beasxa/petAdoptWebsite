@@ -15,6 +15,7 @@ import './App.css';
 import CharacterCard from './CharacterCard';
 import characters from './protagonists.json'
 import MultiActionAreaCard from './adoptAnimalCard';
+import { blueGrey } from '@mui/material/colors';
 
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/vnd.api+json");
@@ -40,6 +41,7 @@ var requestOptions = {
 
 
 function App() {
+
   const [adoptData, setAdoptData] = useState([]);
 
   useEffect(() => {
@@ -55,35 +57,28 @@ function App() {
 
   console.log('new line print', adoptData)
   return ( 
-    <div className="App">
+    <div className="App" style={{backgroundColor: 'aliceblue'}}>
       <CssBaseline />
       <AppBar
         position="static"
-        color="default"
+        // color="default" 
+        style={{backgroundColor: 'steelblue'}}
         elevation={0}
-        sx={{ borderBottom: '1px solid lightgray' }}
+        sx={{ borderBottom: '1px solid white' }}
       >
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Animals Inc
+            Powered by: RescueAnimals
           </Typography>
           <Button
             href="#"
             variant="outlined"
             sx={{ my: 1, mx: 1.5 }}
-            // useEffect={() => {
-            //   fetch("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/", requestOptions)
-            //     .then(response => response.json())
-            //     .then(result => {
-            //       console.log("note for print--------------", result)
-            //       setAdoptData(result.data)
-            //     })
-            //     .catch(error => console.log('error', error))
-            // }
-            // }
+            onClick={() => alert("give the doggos boops...")
+            }
+            
           >
-            {console.log('ouside on click', adoptData)}
-            New Animals
+            secret message...
           </Button>
         </Toolbar>
       </AppBar>
@@ -95,7 +90,7 @@ function App() {
           color="text.primary"
           sx={{ py: 2 }}
         >
-          Random Animals
+          Animals in Need of Homes
         </Typography>
         <Typography
           variant="h5"
@@ -103,7 +98,7 @@ function App() {
           color="text.secondary"
           sx={{ mx: 10 }}
         >
-          Check Out Some Cool Animals!!!
+          
         </Typography>
       </Container>
       {/* End hero unit */}

@@ -25,8 +25,12 @@ export default function MultiActionAreaCard(props) {
           <Typography variant="body2" color="text.secondary">
             Dog Size: {props.sizeGroup}
           </Typography>
+          {props.vaccine ? 
           <Typography variant="body2" color="text.secondary">
-            Gender: {props.sex}
+            Current of vaccinations </Typography>
+            : null}
+          <Typography variant="body2" color="text.secondary">
+            {props.sex}
           </Typography>
         </CardContent>
       </CardActionArea>
