@@ -1,5 +1,5 @@
 import AppBar from '@mui/material/AppBar';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import './App.css';
 import CharacterCard from './CharacterCard';
 import characters from './protagonists.json'
+import MultiActionAreaCard from './adoptAnimalCard';
 
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/vnd.api+json");
@@ -95,11 +96,17 @@ function App() {
               return <Grid
                 item
                 xs={12}
-                md={4}
+                md={3}
               >
-                <CharacterCard
+                <MultiActionAreaCard
                   name={animalDetail.attributes.name} // this is all data, infinity
                   img={animalDetail.attributes.pictureThumbnailUrl}
+                  breedPrimary={animalDetail.attributes.breedPrimary}
+                  sizeGroup={animalDetail.attributes.sizeGroup}
+                  sex={animalDetail.attributes.sex}
+                  url={animalDetail.attributes.url}
+                  vaccine={animalDetail.attributes.isCurrentVaccinations}
+
                 />
               </Grid>
           })}
