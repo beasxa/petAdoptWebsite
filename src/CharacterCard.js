@@ -14,7 +14,7 @@ export default function CharacterCard(props) {
       <CardMedia
         component="img"
         height="350px"
-        image={props.heroImage}
+        image={props.img}
       />
       <CardHeader
         title={props.name}

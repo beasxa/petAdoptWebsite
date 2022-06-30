@@ -1,5 +1,5 @@
 import AppBar from '@mui/material/AppBar';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -24,11 +24,12 @@ var requestOptions = {
   headers: myHeaders,
   redirect: 'follow'
 };
-  
- 
+
+
 
 function App() {
   const [adoptData, setAdoptData] = useState([]);
+  console.log('new line print', adoptData)
   return (
     <div className="App">
       <CssBaseline />
@@ -42,56 +43,40 @@ function App() {
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Animals Inc
           </Typography>
-          <Button 
-            href="#" 
-            variant="outlined" 
+          <Button
+            href="#"
+            variant="outlined"
             sx={{ my: 1, mx: 1.5 }}
             onClick={() => {
-            //   console.log("1 before fetch in App()", animalData, "---", Date.now());
-              
-          
-            //   fetch("https://zoo-animal-api.herokuapp.com/animals/rand/9", requestOptions)
-            //     .then(response => response.json())
-            //     .then(result => {
-            //       console.log("2 inside fetch", Date.now());
-            //       console.log("3 special animals", result, "---", Date.now())
-            //       setAnimalData(result)
-            //     })
-            //     .catch(error => console.log('error', error));
-            
-            //   console.log("4 after fetch", animalData, "---", Date.now());
-              
-            // 
-
-            fetch("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/", requestOptions)
-            .then(response => response.text())
-            .then(result => {
-            console.log(result)
-            setAdoptData(result)
-            })
-            .catch(error => console.log('error', error));
-              console.log('inside on click', adoptData)
-                }
-                }
+              fetch("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                  console.log("note for print--------------", result)
+                  setAdoptData(result.data)
+                })
+                .catch(error => console.log('error', error));
+              console.log('inside on click infinite?', adoptData)
+            }
+            }
           >
-            { console.log('ouside on click', adoptData)}
+            {console.log('ouside on click', adoptData)}
             New Animals
           </Button>
         </Toolbar>
       </AppBar>
-      
-      <Container maxWidth="md" sx={{ my: 4}}>
+
+      <Container maxWidth="md" sx={{ my: 4 }}>
         <Typography
           variant="h2"
           align="center"
           color="text.primary"
-          sx={{ py: 2}}
+          sx={{ py: 2 }}
         >
           Random Animals
         </Typography>
-        <Typography 
-          variant="h5" 
-          align="center" 
+        <Typography
+          variant="h5"
+          align="center"
           color="text.secondary"
           sx={{ mx: 10 }}
         >
@@ -100,40 +85,26 @@ function App() {
       </Container>
       {/* End hero unit */}
       <Container maxWidth="lg">
-        <Grid container 
-          spacing={5} 
+        <Grid container
+          spacing={5}
           justifyContent="center"
           alignItems="flex-start"
         >
           {
-            adoptData.map((animalDetails, index) =>
-            <Grid
-            item
-            xs={12}
-            md={4}
-            key = {index}
-          >
-            <CharacterCard
-            
-            name = {animalDetails.data.attribute.name}
-            
-            // heroImage = {animalDetails.image_link}
-            // sentence = {animalDetails.latin_name}
-            
-            // descriptionArray = {character.description}
-            >
-              
-            </CharacterCard>
-            { console.log('ouside on click bottom', adoptData)}
-            </Grid>
-            )
-          }
-
-    { console.log('ouside on click', adoptData)}
+            adoptData.map((animalDetail) => {
+              return <Grid
+                item
+                xs={12}
+                md={4}
+              >
+                <CharacterCard
+                  name={animalDetail.attributes.name} // this is all data, infinity
+                  img={animalDetail.attributes.pictureThumbnailUrl}
+                />
+              </Grid>
+          })}
         </Grid>
-          
       </Container>
-      
     </div>
   );
 }
