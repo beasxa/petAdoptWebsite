@@ -1,21 +1,13 @@
 import AppBar from '@mui/material/AppBar';
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import './App.css';
-import CharacterCard from './CharacterCard';
-import characters from './protagonists.json'
 import MultiActionAreaCard from './adoptAnimalCard';
-import { blueGrey } from '@mui/material/colors';
 
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/vnd.api+json");
@@ -26,19 +18,6 @@ var requestOptions = {
   headers: myHeaders,
   redirect: 'follow'
 };
-
-// useEffect=(() => {
-//   fetch("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/", requestOptions)
-//     .then(response => response.json())
-//     .then(result => {
-//       console.log("note for print--------------", result)
-//       setAdoptData(result.data)
-//     })
-//     .catch(error => console.log('error', error))
-// }, []
-// )
-
-
 
 function App() {
 
@@ -61,7 +40,6 @@ function App() {
       <CssBaseline />
       <AppBar
         position="static"
-        // color="default" 
         style={{backgroundColor: 'steelblue'}}
         elevation={0}
         sx={{ borderBottom: '1px solid white' }}
@@ -116,7 +94,7 @@ function App() {
                 md={3}
               >
                 <MultiActionAreaCard
-                  name={animalDetail.attributes.name} // this is all data, infinity
+                  name={animalDetail.attributes.name}
                   img={animalDetail.attributes.pictureThumbnailUrl}
                   breedPrimary={animalDetail.attributes.breedPrimary}
                   sizeGroup={animalDetail.attributes.sizeGroup}

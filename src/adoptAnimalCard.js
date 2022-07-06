@@ -27,7 +27,7 @@ export default function MultiActionAreaCard(props) {
           </Typography>
           {props.vaccine ? 
           <Typography variant="body2" color="text.secondary">
-            Current of vaccinations </Typography>
+            Current on vaccinations </Typography>
             : null}
           <Typography variant="body2" color="text.secondary">
             {props.sex}
