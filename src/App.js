@@ -1,112 +1,110 @@
 import AppBar from '@mui/material/AppBar';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import './App.css';
-// import characters from './protagonists.json'
+import MultiActionAreaCard from './adoptAnimalCard';
+
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/vnd.api+json");
+myHeaders.append("Authorization", "wTp5G2tv");
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
 
 function App() {
-  return (
-    <div className="App">
+
+  const [adoptData, setAdoptData] = useState([]);
+
+  useEffect(() => {
+    fetch("https://api.rescuegroups.org/v5/public/animals/search/available/dogs/", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        console.log("note for print--------------", result);
+        setAdoptData(result.data);
+      })
+      .catch(error => console.log('error', error));
+  }, []
+  )
+
+  console.log('new line print', adoptData)
+  return ( 
+    <div className="App" style={{backgroundColor: 'aliceblue'}}>
       <CssBaseline />
       <AppBar
         position="static"
-        color="default"
+        style={{backgroundColor: 'steelblue'}}
         elevation={0}
-        sx={{ borderBottom: '1px solid lightgray' }}
+        sx={{ borderBottom: '1px solid white' }}
       >
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Characters Inc
+            Powered by: RescueAnimals
           </Typography>
-          <Button 
-            href="#" 
-            variant="outlined" 
+          <Button
+            href="#"
+            variant="outlined"
             sx={{ my: 1, mx: 1.5 }}
-            onClick={() => alert("Boop!")}
+            onClick={() => alert("give the doggos boops...")
+            }
+            
           >
-            Button
+            secret message...
           </Button>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="md" sx={{ my: 4}}>
+
+      <Container maxWidth="md" sx={{ my: 4 }}>
         <Typography
           variant="h2"
           align="center"
           color="text.primary"
-          sx={{ py: 2}}
+          sx={{ py: 2 }}
         >
-          Prevalent Protagonists
+          Animals in Need of Homes
         </Typography>
-        <Typography 
-          variant="h5" 
-          align="center" 
+        <Typography
+          variant="h5"
+          align="center"
           color="text.secondary"
           sx={{ mx: 10 }}
         >
-          Hmm, seems like we're missing some of the other protagonists.
+          
         </Typography>
       </Container>
       {/* End hero unit */}
       <Container maxWidth="lg">
-        <Grid container 
-          spacing={5} 
+        <Grid container
+          spacing={5}
           justifyContent="center"
           alignItems="flex-start"
         >
-          <Grid
-            item
-            xs={12}
-            md={4}
-          >
-            <Card>
-              <CardMedia
-                component="img"
-                height="350px"
-                image={"https://i.imgur.com/56chgMj.png"}
-              />
-              <CardHeader
-                title={"Miles Morales"}
-                titleTypographyProps={{ align: 'center' }}
-                sx={{ mt: 1 }}
-              />
-              <CardContent sx={{ pt: 0 }}>
-                <ul>
-                    <Typography component="li">
-                      Definitely Not Spiderman
-                    </Typography>
-                    <Typography component="li">
-                      "Lanky Puberty Boy" vibes
-                    </Typography>
-                    <Typography component="li">
-                      Can't do it on demand
-                    </Typography>
-                    <Typography component="li">
-                      Elite music taste
-                    </Typography>
-                </ul>
-              </CardContent>
-              <CardActions>
-                <Button 
-                  variant="contained"
-                  sx={{ px: 6, mx: 'auto' }}
-                  // I'm trying to use custom CSS defined in the file App.css,
-                  // but it isn't working. Why, and how can I fix it?
-                  className="characterButton"
-                >
-                  Vote
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
+          {
+            adoptData.map((animalDetail) => {
+              return <Grid
+                item
+                xs={12}
+                md={3}
+              >
+                <MultiActionAreaCard
+                  name={animalDetail.attributes.name}
+                  img={animalDetail.attributes.pictureThumbnailUrl}
+                  breedPrimary={animalDetail.attributes.breedPrimary}
+                  sizeGroup={animalDetail.attributes.sizeGroup}
+                  sex={animalDetail.attributes.sex}
+                  url={animalDetail.attributes.url}
+                  vaccine={animalDetail.attributes.isCurrentVaccinations}
+
+                />
+              </Grid>
+          })}
         </Grid>
       </Container>
     </div>
